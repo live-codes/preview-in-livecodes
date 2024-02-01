@@ -1,0 +1,75 @@
+name: "Preview in LiveCodes"
+description: "Preview code changes in LiveCodes playground"
+branding:
+  icon: code
+  color: white
+
+inputs:
+  install-command:
+    description: "Install command - optional (e.g. npm install)"
+    required: false
+
+  build-command:
+    description: "Build command - optional (e.g. npm run build)"
+    required: false
+
+  base-url:
+    description: "Base URL used for the pattern: {{LC::TO_URL(./file.js)}} - optional"
+    required: false
+
+  artifact:
+    description: "Artifact name used to save the message - optional"
+    required: false
+    default: "pr"
+
+  GITHUB_TOKEN:
+    description: "Github token of the repository (automatically created by Github)"
+    default: ${{ github.token }}
+    required: true
+
+outputs:
+  message:
+    description: "The MarkDown message with preview links (e.g. to post as comment in the PR)"
+    value: ${{ steps.generate_output.outputs.message }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install
+      if: ${{ inputs.install-command }}
+      run: ${{ inputs.install-command }}
+      shell: bash
+
+    - name: Build
+      if: ${{ inputs.build-command }}
+      run: ${{ inputs.build-command }}
+      shell: bash
+
+    - name: Generate output
+      id: generate_output
+      shell: bash
+      run: node ${{ github.action_path }}/dist/index.js
+      env:
+        SHA: ${{ github.event.pull_request.head.sha }}
+        REF: ${{ github.event.pull_request.head.ref }}
+        REPO: ${{ github.repository }}
+        BASE_URL: ${{ inputs.base-url }}
+
+    - name: Save output and PR number
+      shell: bash
+      run: |
+        mkdir -p ./pr
+        echo "${{ steps.generate_output.outputs.message }}" > ./pr/${{ github.event.number }}.md
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact }}
+        path: pr/
+        retention-days: 1
+        overwrite: true
