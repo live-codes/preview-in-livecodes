@@ -114,7 +114,7 @@ const getProjects = () => {
 };
 
 const toDataUrl = (content, type) =>
-  `data:${type};charset=UTF-8;base64,` + encode(content, true);
+  `data:${type};charset=UTF-8;base64,` + encode(content);
 
 const removeExtension = (path) => path.split(".").slice(0, -1).join(".");
 
