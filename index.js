@@ -172,7 +172,7 @@ const generateOutput = (projects) => {
 **Latest commit:** ${sha}  
 ${getFormattedDate(lastUpdated)}
 
-|  Project | Link |
+|  Playground | Link |
 |:-:|------------------------|
 ${projectsMarkDown.join("\n")}
 ---
