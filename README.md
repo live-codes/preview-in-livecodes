@@ -4,7 +4,9 @@ This is a GitHub action that generates preview links to [LiveCodes playground](h
 
 This can be useful for library authors to preview changes in the playground before merging the pull request.
 
-![screenshot for this action](https://pbs.twimg.com/media/GFNTN7PWcAAoaTf?format=jpg&name=medium)
+![screenshot for this action](./screenshot.png)
+
+PLease check the [example repo](https://github.com/hatemhosny/preview-in-livecodes-demo) for a working demo.
 
 ## Inputs
 
@@ -77,7 +79,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build and generate
-        uses: live-codes/preview-in-livecodes@1
+        uses: live-codes/preview-in-livecodes@v1
         with:
           # install-command: "npm install"
           # build-command: "npm run build"
@@ -109,7 +111,7 @@ jobs:
       github.event.workflow_run.conclusion == 'success'
 
     steps:
-      - uses: live-codes/pr-comment-from-artifact@1
+      - uses: live-codes/pr-comment-from-artifact@v1
         with:
           GITHUB_TOKEN: ${{ github.token }}
 ```
@@ -127,7 +129,7 @@ To use the files in the playgrounds, the available options include:
 - The assets used in playgrounds are (pre-built and) committed in the pull request. You can refer to them using CDNs that mirror GitHub like [jsDelivr](https://www.jsdelivr.com/) (e.g. `https://cdn.jsdelivr.net/gh/my-username/my-repo@new-branch/file.js`).  
   You may also use the `base-url` input with dynamic values like `{{LC::SHA}}`, `{{LC::REF}}` or `{{LC::REPO}}` (e.g. `base-url: "https://cdn.jsdelivr.net/gh/{{LC::REPO}}@{{LC::SHA}}/"`), and refer to the assets as `{{LC::TO_URL(./file.js)}}`.
 
-- The action can encode the files as [data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) automatically when referred to in the playground. In the project JSON, you can refer to the encoded assets like this: `{{LC::TO_DATA_URL(./file.js)}}`. Please note that this is only recommended for small files, because the contents of these files will be encoded in the preview URL.
+- The action can encode the files as [data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) automatically when referred to in the playground. In the project JSON, you can refer to the encoded assets like this: `{{LC::TO_DATA_URL(./file.js)}}`. It is recommended to use this option only when the files are small. The project JSON (including the assets encoded as data URLs) is stored at [dpaste](https://dpaste.com/) (which has a maximum character limit of **1,000,000 characters** and the link expires after **365 days**).
 
 ## Dynamic Values
 
