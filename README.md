@@ -28,7 +28,7 @@ This is an example for usage:
 
 ### Add the workflow files to the default branch
 
-The following 2 yaml files **need to be merged to the default branch before the workflow can be triggered**. ([GitHub Actions docs](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run))
+The following 2 yaml files **need to be merged to the default branch (e.g. main) before the workflow can be triggered**. ([GitHub Actions docs](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run))
 
 - Trigger the action when a pull request is created or updated:
 
