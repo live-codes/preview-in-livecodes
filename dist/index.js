@@ -27046,6 +27046,7 @@ const lastUpdated = process.env.LAST_UPDATED || "";
 const repo = process.env.REPO || "";
 const baseUrl = (process.env.BASE_URL || "")
   .replace(/{{\s*LC::SHA\s*}}/g, sha)
+  .replace(/{{\s*LC::SHORT_SHA\s*}}/g, sha.substring(0, 7))
   .replace(/{{\s*LC::REF\s*}}/g, ref)
   .replace(/{{\s*LC::REPO\s*}}/g, repo);
 

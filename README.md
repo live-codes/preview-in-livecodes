@@ -26,40 +26,9 @@ This action generates the message for the PR comment and uploads it as an artifa
 
 This is an example for usage:
 
-- This is a demo function to run in the playground:
+### Add the workflow files to the default branch
 
-**index.js**
-
-```js
-export const demo = () => {
-  console.log("Hello, World!");
-};
-```
-
-- This is a JSON file for a LiveCodes project in the `.livecodes` folder. It can be either a project [configuration object](https://livecodes.io/docs/configuration/configuration-object) or a playground [embed object](https://livecodes.io/docs/sdk/js-ts#createplayground):
-
-**.livecodes/hello-world.json**
-
-```json
-{
-  "title": "JavaScript Starter",
-  "markup": {
-    "language": "html",
-    "content": "<h1>Hello, World!</h1>"
-  },
-  "script": {
-    "language": "javascript",
-    "content": "import { demo } from './index.js';\n\ndemo();"
-  },
-  "imports": {
-    "./index.js": "{{LC::TO_DATA_URL(./index.js)}}"
-  }
-}
-```
-
-Multiple playgrounds can be created by adding multiple JSON files in the same `.livecodes` folder. The [`title`](https://livecodes.io/docs/configuration/configuration-object#title) property of the [configuration object](https://livecodes.io/docs/configuration/configuration-object) is used as the playground name in the message, otherwise the filename is used.
-
-Note the use of `{{LC::TO_DATA_URL(./index.js)}}` in the [imports](https://livecodes.io/docs/features/module-resolution#custom-module-resolution) property. The file `index.js` is converted to a [data URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) and imported in the playground. See later for more details and other options.
+The following 2 yaml files **need to be merged to the default branch before the workflow can be triggered**. ([GitHub Actions docs](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run))
 
 - Trigger the action when a pull request is created or updated:
 
@@ -116,6 +85,45 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 ```
 
+### Configure Playgrounds
+
+Then adding these via PR should trigger the workflows.
+
+- This is a demo function to run in the playground:
+
+**index.js**
+
+```js
+export const demo = () => {
+  console.log("Hello, World!");
+};
+```
+
+- This is a JSON file for a LiveCodes project in the `.livecodes` folder. It can be either a project [configuration object](https://livecodes.io/docs/configuration/configuration-object) or a playground [embed object](https://livecodes.io/docs/sdk/js-ts#createplayground):
+
+**.livecodes/hello-world.json**
+
+```json
+{
+  "title": "JavaScript Starter",
+  "markup": {
+    "language": "html",
+    "content": "<h1>Hello, World!</h1>"
+  },
+  "script": {
+    "language": "javascript",
+    "content": "import { demo } from './index.js';\n\ndemo();"
+  },
+  "imports": {
+    "./index.js": "{{LC::TO_DATA_URL(./index.js)}}"
+  }
+}
+```
+
+Multiple playgrounds can be created by adding multiple JSON files in the same `.livecodes` folder. The [`title`](https://livecodes.io/docs/configuration/configuration-object#title) property of the [configuration object](https://livecodes.io/docs/configuration/configuration-object) is used as the playground name in the message, otherwise the filename is used.
+
+Note the use of `{{LC::TO_DATA_URL(./index.js)}}` in the [imports](https://livecodes.io/docs/features/module-resolution#custom-module-resolution) property. The file `index.js` is converted to a [data URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) and imported in the playground. See later for more details and other options.
+
 ## Using Newly Added Code in Playgrounds
 
 The new code added by the PR needs to be available as assets for the playgrounds (e.g. scripts, stylesheets, etc.).
@@ -137,6 +145,7 @@ The following values are made available in the project JSON and in `base-url` in
 
 - `{{LC::REF}}`: The name of the branch or tag of the pull request head.
 - `{{LC::SHA}}`: The full SHA of the commit.
+- `{{LC::SHORT_SHA}}`: Short SHA (first 7 characters) of the commit.
 - `{{LC::REPO}}`: The name of the repository.
 
 In addition, in project JSON, you can use the following to refer to files in the repository:
