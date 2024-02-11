@@ -27058,6 +27058,7 @@ const replaceValues = (str) => {
 
   return str
     .replace(/{{\s*LC::SHA\s*}}/g, sha)
+    .replace(/{{\s*LC::SHORT_SHA\s*}}/g, sha.substring(0, 7))
     .replace(/{{\s*LC::REF\s*}}/g, ref)
     .replace(/{{\s*LC::REPO\s*}}/g, repo)
     .replace(new RegExp(getPattern("TO_DATA_URL"), "g"), (_match, file) => {
