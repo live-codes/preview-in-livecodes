@@ -27042,12 +27042,14 @@ const mime = __nccwpck_require__(9994);
 
 const sha = process.env.SHA || "";
 const ref = process.env.REF || "";
+const pr = process.env.PR || "";
 const lastUpdated = process.env.LAST_UPDATED || "";
 const repo = process.env.REPO || "";
 const baseUrl = (process.env.BASE_URL || "")
   .replace(/{{\s*LC::SHA\s*}}/g, sha)
   .replace(/{{\s*LC::SHORT_SHA\s*}}/g, sha.substring(0, 7))
   .replace(/{{\s*LC::REF\s*}}/g, ref)
+  .replace(/{{\s*LC::PR\s*}}/g, pr)
   .replace(/{{\s*LC::REPO\s*}}/g, repo);
 
 const projectsRoot = ".livecodes";
@@ -27060,6 +27062,7 @@ const replaceValues = (str) => {
     .replace(/{{\s*LC::SHA\s*}}/g, sha)
     .replace(/{{\s*LC::SHORT_SHA\s*}}/g, sha.substring(0, 7))
     .replace(/{{\s*LC::REF\s*}}/g, ref)
+    .replace(/{{\s*LC::PR\s*}}/g, pr)
     .replace(/{{\s*LC::REPO\s*}}/g, repo)
     .replace(new RegExp(getPattern("TO_DATA_URL"), "g"), (_match, file) => {
       try {

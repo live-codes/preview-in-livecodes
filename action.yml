@@ -57,6 +57,7 @@ runs:
       env:
         SHA: ${{ github.event.pull_request.head.sha }}
         REF: ${{ github.event.pull_request.head.ref }}
+        PR: ${{ github.event.number }}
         LAST_UPDATED: ${{ github.event.pull_request.updated_at }}
         REPO: ${{ github.repository }}
         BASE_URL: ${{ inputs.base-url }}

@@ -1,6 +1,6 @@
 {
   "name": "preview-in-livecodes",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Preview code changes in LiveCodes playground",
   "main": "index.js",
   "scripts": {

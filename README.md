@@ -143,10 +143,11 @@ To use the files in the playgrounds, the available options include:
 
 The following values are made available in the project JSON and in `base-url` input:
 
-- `{{LC::REF}}`: The name of the branch or tag of the pull request head.
-- `{{LC::SHA}}`: The full SHA of the commit.
+- `{{LC::REF}}`: Name of the branch or tag of the pull request head.
+- `{{LC::SHA}}`: Full SHA of the commit.
 - `{{LC::SHORT_SHA}}`: Short SHA (first 7 characters) of the commit.
-- `{{LC::REPO}}`: The name of the repository.
+- `{{LC::PR}}`: Pull request number.
+- `{{LC::REPO}}`: Name of the repository.
 
 In addition, in project JSON, you can use the following to refer to files in the repository:
 
