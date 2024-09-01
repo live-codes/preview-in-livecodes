@@ -152,9 +152,7 @@ The following values are made available in the project JSON and in `base-url` in
 In addition, in project JSON, you can use the following to refer to files in the repository:
 
 - `{{LC::TO_URL(./file.js)}}`: The URL of the file `./file.js` with the `base-url` value prepended. The input `base-url` is required in this case.
-- `{{LC::TO_DATA_URL(./file.js)}}`: Converts the file `./file.js` to a [data URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) and uses it.
-
-The file path is relative to the repository root.
+- `{{LC::TO_DATA_URL(./file.js)}}`: Converts the file `./file.js` to a [data URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) and uses it. The file path is relative to the repository root.
 
 ## License
 
