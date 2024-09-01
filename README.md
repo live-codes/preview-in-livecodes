@@ -6,7 +6,11 @@ This can be useful for library authors to preview changes in the playground befo
 
 ![screenshot for this action](./screenshot.png)
 
-PLease check the [example repo](https://github.com/hatemhosny/preview-in-livecodes-demo) for a working demo.
+## Demo
+
+See it in action in the [RacingBars repo](https://github.com/hatemhosny/racing-bars/pull/184#issuecomment-2323477057).
+
+Check the [example repo](https://github.com/hatemhosny/preview-in-livecodes-demo) for a basic working demo.
 
 ## Inputs
 
