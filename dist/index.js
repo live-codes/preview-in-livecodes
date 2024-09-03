@@ -27227,7 +27227,7 @@ const run = async () => {
 
     const projects = [];
     for (const project of projectOptions) {
-      const { hasDataUrls, ...options } = project;
+      const { prLabel, hasDataUrls, ...options } = project;
       if (hasDataUrls && options.config) {
         // sequential requests and delay to respect rate limit of 1 request/second
         await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -27238,7 +27238,7 @@ const run = async () => {
         }
       }
       const playgroundUrl = getPlaygroundUrl(options).replace(/%2F/g, "/");
-      projects.push({ title: project.prLabel, url: playgroundUrl });
+      projects.push({ title: prLabel, url: playgroundUrl });
     }
 
     const message = generateOutput(projects);
