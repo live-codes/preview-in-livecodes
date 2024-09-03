@@ -94,28 +94,20 @@ const getProjects = () => {
             "loading",
           ].includes(key)
         );
-        return isConfig
-          ? { config: options, hasDataUrls }
-          : { hasDataUrls, ...options };
+        const config = isConfig ? options : options.config;
+        const embedOptions = isConfig ? { config: options } : options;
+        const prLabel =
+          config?.title ||
+          getStarterTitle(embedOptions.template) ||
+          removeExtension(file);
+
+        return { prLabel, hasDataUrls, ...embedOptions };
       } catch (error) {
         console.error(error);
         return;
       }
     })
-    .reduce(
-      (acc, cur, idx) =>
-        !cur
-          ? acc
-          : {
-              ...acc,
-              [`${
-                cur.config?.title ||
-                getStarterTitle(cur.template) ||
-                removeExtension(files[idx])
-              }`]: cur,
-            },
-      {}
-    );
+    .filter((x) => x != null);
 };
 
 const toDataUrl = (content, type) =>
@@ -198,8 +190,8 @@ const run = async () => {
     }
 
     const projects = [];
-    for (const key in projectOptions) {
-      const { hasDataUrls, ...options } = projectOptions[key];
+    for (const project of projectOptions) {
+      const { hasDataUrls, ...options } = project;
       if (hasDataUrls && options.config) {
         // sequential requests and delay to respect rate limit of 1 request/second
         await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -210,7 +202,7 @@ const run = async () => {
         }
       }
       const playgroundUrl = getPlaygroundUrl(options).replace(/%2F/g, "/");
-      projects.push({ title: key, url: playgroundUrl });
+      projects.push({ title: project.prLabel, url: playgroundUrl });
     }
 
     const message = generateOutput(projects);
